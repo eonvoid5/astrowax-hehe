@@ -5,7 +5,16 @@ services:
     ports:
       - "3000:3000"
     environment:
-      OLLAMA_URL: http://host.docker.internal:11434
-      OLLAMA_MODEL: qwen3:8b
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      MC_DEV_AI_URL: http://ai:8000
+    depends_on:
+      - ai
+
+  ai:
+    build:
+      context: .
+      dockerfile: ai/Dockerfile
+    restart: unless-stopped
+    expose:
+      - "8000"
+    volumes:
+      - ./ai/checkpoints:/ai/ai/checkpoints
