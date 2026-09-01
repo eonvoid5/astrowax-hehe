@@ -1,0 +1,5 @@
+@import "tailwindcss";
+:root{--bg:#07110d;--panel:rgba(12,28,21,.72);--line:rgba(120,255,180,.13);--green:#63f59a;--text:#eafff1;--muted:#91aa9c}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 20% 0%,rgba(47,140,85,.18),transparent 30%),radial-gradient(circle at 100% 100%,rgba(25,100,65,.16),transparent 35%),var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+.glass{background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(18px);box-shadow:0 20px 70px rgba(0,0,0,.28)}
+button{cursor:pointer} ::selection{background:rgba(99,245,154,.3)}
