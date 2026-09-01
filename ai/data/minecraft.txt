@@ -1,0 +1,108 @@
+MC DEV AI TRAINING CORPUS
+
+Minecraft hosting and development reference.
+
+User: What is Paper?
+MC Dev AI: Paper is a high-performance Minecraft Java server implementation based on Spigot. It adds performance improvements and APIs for plugin developers. Always check the Paper documentation for the exact Minecraft version you are running.
+
+User: What is a plugin?
+MC Dev AI: A plugin is server-side Java software that extends a Minecraft server without changing the client jar. Paper, Spigot and Bukkit plugins commonly use an event-driven API. A plugin normally has a plugin.yml or paper-plugin.yml and a main Java class.
+
+User: How do I make a Paper plugin?
+MC Dev AI: Create a Gradle or Maven Java project, add the matching Paper API dependency, create your main JavaPlugin class, define the plugin metadata, implement listeners or commands, then build the jar and place it in the server plugins directory. Test against the exact server version you target.
+
+User: My server has low TPS. What should I check?
+MC Dev AI: Check MSPT, CPU usage, entity counts, chunk generation, plugins and profiling data before changing JVM flags. A server with 20 TPS can still have spikes if MSPT is high. Use a profiler or timings-style diagnostic supported by your server version and identify the expensive task first.
+
+User: What is MSPT?
+MC Dev AI: MSPT means milliseconds per server tick. Minecraft targets a 50 ms tick budget for 20 TPS. If average work per tick stays above that budget, the server cannot maintain 20 TPS.
+
+User: How much RAM should I give a Paper server?
+MC Dev AI: RAM depends on player count, view distance, simulation distance, plugins, entities and world size. Do not assume more RAM automatically means better performance. Give the JVM enough memory for the workload while leaving memory for the operating system and other services.
+
+User: How do I restart a Linux server safely?
+MC Dev AI: First identify the service or process. If it is managed by systemd, use systemctl status SERVICE to inspect it and systemctl restart SERVICE to restart it. If you are unsure what owns the process, inspect the service definition before killing random processes.
+
+User: What is Pterodactyl?
+MC Dev AI: Pterodactyl is a game-server management panel that uses Wings on nodes to manage isolated server instances. It commonly uses Docker containers for server isolation and resource limits. Panel and Wings versions must be compatible.
+
+User: What is Docker?
+MC Dev AI: Docker packages applications and their dependencies into containers. Containers share the host kernel but have isolated processes, networking and filesystems. A Minecraft server can run inside a container with CPU, memory and disk limits.
+
+User: Why does a Minecraft server show connection refused?
+MC Dev AI: Connection refused usually means the destination host is reachable but nothing is accepting connections on the requested address and port, or a firewall or proxy is actively rejecting it. Check that the server is running, listening on the expected interface and port, and that the firewall and proxy configuration match.
+
+User: What is 0.0.0.0?
+MC Dev AI: 0.0.0.0 is commonly used as a server bind address meaning listen on available IPv4 interfaces. It is not normally the address a remote player should type into Minecraft. Remote clients use the server's reachable IP address or DNS hostname.
+
+User: How do I check a listening port on Linux?
+MC Dev AI: Use ss -lntup to inspect listening TCP and UDP sockets. Then compare the listening address and port with the application configuration and firewall rules.
+
+User: How do I check RAM on Linux?
+MC Dev AI: Run free -h for a quick memory summary. For processes, use ps, top or another process monitor. Check available memory rather than looking only at the free column.
+
+User: How do I check disk space?
+MC Dev AI: Run df -h for filesystem usage and du -sh PATH for directory size. If a Minecraft server fills its disk, inspect logs, world backups, crash reports and old files before deleting anything important.
+
+User: What is Java?
+MC Dev AI: Java is the runtime and programming language used by Minecraft Java Edition and many Minecraft server plugins. The required Java version depends on the Minecraft/server version, so verify the server's compatibility requirements before changing Java versions.
+
+User: What is Gradle?
+MC Dev AI: Gradle is a build automation system widely used for Java projects. In a Minecraft plugin project it can download dependencies, compile Java code, run tests and package the final jar.
+
+User: What is Maven?
+MC Dev AI: Maven is another Java build and dependency-management system. A Maven Minecraft plugin project usually has a pom.xml describing dependencies, plugins and build settings.
+
+User: Why does a plugin fail with ClassNotFoundException?
+MC Dev AI: The JVM tried to load a class that was not available at runtime. Check the stack trace, dependency scope, shaded dependencies and whether the required library is actually present in the plugin jar or server classpath. Do not blindly copy random jars into the plugins directory.
+
+User: Why does a plugin fail with NoSuchMethodError?
+MC Dev AI: NoSuchMethodError commonly indicates a binary compatibility mismatch: code was compiled against one library version but a different version is available at runtime. Check the server version, API dependency and packaged dependencies.
+
+User: What is Cloudflare?
+MC Dev AI: Cloudflare provides services including DNS, reverse proxying, CDN features, security controls and tunnels. Minecraft TCP/UDP traffic has different requirements from normal HTTP websites, so do not assume a standard orange-cloud web proxy will proxy every Minecraft port.
+
+User: What is DNS?
+MC Dev AI: DNS maps names to records such as IPv4 addresses, IPv6 addresses and service information. An A record maps a hostname to IPv4. An AAAA record maps a hostname to IPv6. A CNAME aliases one hostname to another hostname.
+
+User: What should I do before changing a production Minecraft server?
+MC Dev AI: Back up important data, record the current configuration, understand the rollback path and make one controlled change at a time. Never run destructive commands just because they appear in a generic troubleshooting guide.
+
+User: How should an AI debug a server error?
+MC Dev AI: Start with the exact error and surrounding stack trace. Identify the first meaningful failure rather than the final cascade of errors. Ask for the Minecraft version, server implementation, Java version and the change that happened immediately before the problem when those details are necessary.
+
+User: What makes an AI answer feel human?
+MC Dev AI: It should understand the conversation, answer the actual question, avoid repetitive greetings, explain uncertainty honestly, adapt to the user's skill level and remember relevant context. It should not pretend it performed actions it could not perform.
+
+User: I am using a VPS and want to host a Minecraft server.
+MC Dev AI: Start by securing SSH, updating the operating system, creating a non-root administrative workflow, installing the required Java version, creating a dedicated server user, configuring the Minecraft server and firewall, then adding backups and monitoring. Expose only the ports you actually need.
+
+User: My Minecraft server crashes during startup.
+MC Dev AI: Read the latest log and crash report first. Common causes include a wrong Java version, incompatible plugins or mods, invalid configuration, missing dependencies, corrupted world data or insufficient system resources. The exact stack trace is more useful than guessing.
+
+User: How should a plugin command be designed?
+MC Dev AI: Validate the sender type, permissions, arguments and target objects. Return a useful usage message when arguments are invalid. Keep command execution separate from long-running work so the main server thread is not blocked by network requests or expensive computation.
+
+User: Why should expensive work avoid the main server thread?
+MC Dev AI: Minecraft's main server thread has a strict tick-time budget. Blocking file operations, database queries, network calls or heavy calculations can increase MSPT and cause lag. Use appropriate asynchronous APIs when the server implementation permits them, and safely return results to the main thread when required by the API.
+
+User: How do I secure a VPS?
+MC Dev AI: Keep the OS updated, use strong authentication, protect SSH, restrict inbound firewall rules, avoid exposing administrative panels unnecessarily, use HTTPS where appropriate, maintain backups and monitor logs. Security changes should be tested so you do not lock yourself out.
+
+User: What is a reverse proxy?
+MC Dev AI: A reverse proxy accepts client connections and forwards them to an internal service. For web applications this is commonly Nginx or Caddy. Minecraft traffic can require a proxy designed for the Minecraft protocol, such as Velocity, depending on the architecture.
+
+User: What is Velocity?
+MC Dev AI: Velocity is a Minecraft proxy designed to connect players to backend servers such as Paper. It can handle routing and proxy-level configuration while backend servers remain private on the internal network when configured correctly.
+
+User: What is Fabric?
+MC Dev AI: Fabric is a lightweight modding toolchain and loader for Minecraft Java Edition. Fabric mods are not interchangeable with Paper plugins. Always verify the loader, Minecraft version and mod dependencies.
+
+User: What is Forge?
+MC Dev AI: Forge is a long-standing Minecraft Java modding ecosystem. Mods target specific Minecraft and Forge-compatible versions, and dependency compatibility matters during installation.
+
+User: What is NeoForge?
+MC Dev AI: NeoForge is a Minecraft modding ecosystem derived from the Forge ecosystem. Treat NeoForge and Forge as separate targets unless a mod explicitly supports both.
+
+User: How should MC Dev AI respond when it does not know something?
+MC Dev AI: It should say what is uncertain, avoid inventing details and tell the user what exact version, log or documentation would verify the answer. Confidence is less important than correctness.
